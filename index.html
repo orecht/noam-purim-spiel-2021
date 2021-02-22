@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Noam Purim Spiel 5781 / 2021</title>
+  <meta name="description" content="A demo of a card payment on Stripe" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="global.css" />
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="/client.js" defer></script> -->
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <h1>Noam Purim Spiel 5781 / 2021</h1>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <table>
+          <tr>
+            <td>£ &nbsp;</td>
+            <td><input class="form-control" type="number" id="custom-donation-amount" placeholder="50.00" min="0"
+                step="10.00" /></td>
+          </tr>
+        </table>
+        <div class="row">
+          <script src="https://checkout.stripe.com/checkout.js"></script>
+          <button id="customButton" class="btn btn-primary btn-lg">Donate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var handler = StripeCheckout.configure({
+      key: 'pk_test_HHN5WYd7as5jsa6j3ogVjww1',
+      image: '/noam_logo.png',
+      token: function (token) {
+        // Use the token to create the charge with a server-side script.
+        // You can access the token ID with `token.id`
+      }
+    });
+
+    document.getElementById('customButton').addEventListener('click', function (e) {
+      // This line is the only real modification...
+      var amount = $("#custom-donation-amount").val() * 100;
+      handler.open({
+        name: 'Noam Primary PTA',
+        description: 'Purim Spiel',
+        // ... aside from this line where we use the value.
+        amount: amount
+      });
+      e.preventDefault();
+    });
+  </script>
+  </div>
+</body>
+
+</html>
